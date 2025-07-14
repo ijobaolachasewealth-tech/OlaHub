@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Awesome Marketplace - Home</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://placehold.co/32x32/023047/ffffff?text=LOGO">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for Inter and Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Odometer CSS (for animated counters) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.7/themes/odometer-theme-default.min.css">
+
+    <style>
+        /* Custom CSS for the Preloader and Animations */
+        body {
+            font-family: 'Inter', sans-serif; /* Default body font */
+            scroll-behavior: smooth; /* Smooth scrolling for navigation */
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations */
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif; /* Headings font */
+        }
+
+        /* Preloader styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff; /* White background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none; /* Allows clicks through once hidden */
+        }
+
+        .preloader-logo {
+            width: 96px; /* Slightly larger for impact */
+            height: 96px;
+            animation: 
+                roll 2s infinite linear,
+                glow 1.5s infinite alternate; /* Rolling and glowing animation */
+        }
+
+        @keyframes roll {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 8px rgba(255, 183, 3, 0.8)) drop-shadow(0 0 15px rgba(255, 183, 3, 0.6)); }
+            to { filter: drop-shadow(0 0 15px rgba(255, 183, 3, 1)) drop-shadow(0 0 30px rgba(255, 183, 3, 0.9)); }
+        }
+
+        /* Magical scrolling animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Specific animations for elements within sections */
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-scale-in {
+            animation: scale-in 0.8s ease-out forwards;
+        }
+        @keyframes scale-in {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Delay utility for animations */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+
+        /* Custom colors for Tailwind */
+        :root {
+            --color-sky-blue: 142, 202, 230;
+            --color-blue-green: 33, 158, 188;
+            --color-prussian-blue: 2, 48, 71;
+            --color-selective-yellow: 255, 183, 3;
+            --color-ut-orange: 251, 133, 0;
+            --color-white: 255, 255, 255;
+            --color-gray-light: 248, 249, 250; /* Added for section background */
+        }
+
+        .text-ut-orange { color: rgb(var(--color-ut-orange)); }
+        .bg-ut-orange { background-color: rgb(var(--color-ut-orange)); }
+        .border-ut-orange { border-color: rgb(var(--color-ut-orange)); }
+
+        .text-selective-yellow { color: rgb(var(--color-selective-yellow)); }
+        .bg-selective-yellow { background-color: rgb(var(--color-selective-yellow)); }
+        .border-selective-yellow { border-color: rgb(var(--color-selective-yellow)); }
+
+        .text-prussian-blue { color: rgb(var(--color-prussian-blue)); }
+        .bg-prussian-blue { background-color: rgb(var(--color-prussian-blue)); }
+        .border-prussian-blue { border-color: rgb(var(--color-prussian-blue)); }
+
+        .text-blue-green { color: rgb(var(--color-blue-green)); }
+        .bg-blue-green { background-color: rgb(var(--color-blue-green)); }
+        .border-blue-green { border-color: rgb(var(--color-blue-green)); }
+
+        .text-sky-blue { color: rgb(var(--color-sky-blue)); }
+        .bg-sky-blue { background-color: rgb(var(--color-sky-blue)); }
+        .border-sky-blue { border-color: rgb(var(--color-sky-blue)); }
+
+        .bg-gray-light { background-color: rgb(var(--color-gray-light)); }
+
+        /* General button styles */
+        .btn-primary {
+            @apply bg-prussian-blue text-white py-3 px-8 rounded-lg hover:bg-blue-green transition duration-300 ease-in-out transform hover:scale-105;
+        }
+        .btn-outline {
+            @apply border-2 border-prussian-blue text-prussian-blue bg-white py-3 px-8 rounded-lg hover:bg-prussian-blue hover:text-white transition duration-300 ease-in-out transform hover:scale-105;
+        }
+
+        /* Mobile menu transitions */
+        .mobile-menu-overlay {
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .mobile-menu-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-menu-overlay.hidden-state { /* Use a different class to manage hidden state after transition */
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Typewriter effect for hero title */
+        .typewriter-text {
+            display: inline-block; /* Essential for text content manipulation and min-width */
+            overflow: hidden; /* Hide overflowing text */
+            white-space: nowrap; /* Keep text on a single line */
+            vertical-align: bottom; /* Align with surrounding text */
+            
+            /* Responsive min-width to prevent layout shift */
+            min-width: 15rem; /* Default for mobile (e.g., "Digital Freedom" at text-3xl) */
+        }
+
+        @media (min-width: 768px) { /* md breakpoint */
+            .typewriter-text {
+                min-width: 20rem; /* For desktop (e.g., "Premium Logins" at text-4xl) */
+            }
+        }
+
+        .typewriter-text-cursor {
+            border-right: 3px solid transparent; /* Cursor effect, initially transparent */
+        }
+
+        .typewriter-text-cursor.typing-active {
+            border-right: 3px solid rgb(var(--color-selective-yellow)); /* Visible cursor */
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: rgb(var(--color-selective-yellow)); }
+        }
+
+        .hero-title-glow-text {
+            color: rgb(var(--color-selective-yellow)); /* Gold color */
+            text-shadow: 
+                0 0 5px rgba(255, 183, 3, 0.6), /* Initial subtle glow */
+                0 0 10px rgba(255, 183, 3, 0.4);
+            animation: text-glow 1.5s infinite alternate; /* Continuous glow */
+        }
+
+        @keyframes text-glow {
+            from {
+                text-shadow: 
+                    0 0 5px rgba(255, 183, 3, 0.6),
+                    0 0 10px rgba(255, 183, 3, 0.4);
+            }
+            to {
+                text-shadow: 
+                    0 0 10px rgba(255, 183, 3, 1),
+                    0 0 20px rgba(255, 183, 3, 0.8),
+                    0 0 30px rgba(255, 183, 3, 0.6);
+            }
+        }
+
+        /* New: Button Animation for Hero Section - Now Bouncing */
+        @keyframes bounce-button {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-5px); } /* A bit more pronounced bounce */
+            50% { transform: translateY(0); }
+            75% { transform: translateY(-2px); } /* Subtler secondary bounce */
+        }
+
+        .btn-hero-animated {
+            animation: bounce-button 2s infinite ease-in-out; /* Apply bouncing effect */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smooth transition for hover */
+        }
+
+        .btn-hero-animated:hover {
+            animation: none; /* Stop bounce on hover */
+            transform: scale(1.05); /* More pronounced scale on hover */
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2); /* Stronger shadow on hover */
+        }
+
+        /* New: Styling for the word "Chase" - Now Breathing (Glow) */
+        .text-chase-highlight {
+            color: rgb(var(--color-selective-yellow)); /* Selective Yellow color */
+            font-weight: 700; /* Bold */
+            text-shadow: 
+                0 0 3px rgba(255, 183, 3, 0.7), /* Subtle inner glow */
+                0 0 8px rgba(255, 183, 3, 0.4); /* Outer glow */
+            transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+            display: inline-block; /* Essential for transform to work */
+            animation: breathe-glow-chase 2s infinite alternate ease-in-out; /* Apply breathing glow */
+        }
+
+        .text-chase-highlight:hover {
+            text-shadow: 
+                0 0 5px rgba(255, 183, 3, 0.9), /* More intense inner glow on hover */
+                0 0 12px rgba(255, 183, 3, 0.6); /* More intense outer glow on hover */
+            transform: translateY(-1px); /* Slight lift on hover */
+            animation: none; /* Stop breathing on hover, allow hover effect to dominate */
+        }
+
+        /* Keyframes for the breathing glow effect on "Chase" - MADE MORE OBVIOUS */
+        @keyframes breathe-glow-chase {
+            0%, 100% {
+                text-shadow: 
+                    0 0 3px rgba(255, 183, 3, 0.7), 
+                    0 0 8px rgba(255, 183, 3, 0.4);
+            }
+            50% {
+                text-shadow: 
+                    0 0 10px rgba(255, 183, 3, 1), /* Increased blur/spread */
+                    0 0 25px rgba(255, 183, 3, 0.8), /* Increased blur/spread and opacity */
+                    0 0 40px rgba(255, 183, 3, 0.6); /* Added a third, larger shadow */
+            }
+        }
+
+
+        /* New: Styling for the word "Ijoba" - Now with Pulse-Scale Animation */
+        .text-ijoba-highlight {
+            color: rgb(var(--color-ut-orange)); /* UT Orange color */
+            font-weight: 700; /* Bold */
+            text-shadow: 
+                0 0 3px rgba(251, 133, 0, 0.7), /* Subtle inner glow */
+                0 0 8px rgba(251, 133, 0, 0.4); /* Outer glow */
+            transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+            display: inline-block; /* Essential for transform to work */
+            animation: ijoba-pulse-scale 2.5s infinite alternate ease-in-out; /* Apply pulse-scale animation */
+        }
+
+        .text-ijoba-highlight:hover {
+            text-shadow: 
+                0 0 5px rgba(251, 133, 0, 0.9), /* More intense inner glow on hover */
+                0 0 12px rgba(251, 133, 0, 0.6); /* More intense outer glow on hover */
+            transform: translateY(-1px); /* Slight lift on hover */
+            animation: none; /* Stop pulse on hover, allow hover effect to dominate */
+        }
+
+        /* Keyframes for the pulse-scale effect on "Ijoba" */
+        @keyframes ijoba-pulse-scale {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 
+                    0 0 3px rgba(251, 133, 0, 0.7), 
+                    0 0 8px rgba(251, 133, 0, 0.4);
+            }
+            50% {
+                transform: scale(1.02); /* Slightly larger scale */
+                text-shadow: 
+                    0 0 8px rgba(251, 133, 0, 0.9), 
+                    0 0 20px rgba(251, 133, 0, 0.7),
+                    0 0 30px rgba(251, 133, 0, 0.5); /* More intense glow */
+            }
+        }
+
+        /* Styling for FAQ accordion (basic) */
+        .faq-question {
+            cursor: pointer;
+            @apply flex justify-between items-center py-4 px-6 bg-white-custom rounded-lg shadow-md mb-4 transition-all duration-300;
+        }
+        .faq-question:hover {
+            @apply bg-gray-100 shadow-lg;
+        }
+        .faq-answer {
+            @apply px-6 pb-4 text-gray-700 leading-relaxed hidden;
+        }
+        .faq-question.active + .faq-answer {
+            display: block;
+        }
+        .faq-question .arrow-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+        .faq-question.active .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Back to Top Button */
+        #backToTopBtn {
+            @apply fixed bottom-8 right-8 bg-selective-yellow text-prussian-blue p-4 rounded-full shadow-lg text-xl cursor-pointer transition-all duration-300 z-40;
+            display: none; /* Hidden by default */
+        }
+        #backToTopBtn:hover {
+            @apply bg-ut-orange transform scale-110;
+        }
+
+        /* New: Styling for the special footer in mobile menu */
+        .ijoba-signature-glow {
+            color: rgb(var(--color-white)); /* Base text color */
+            font-family: 'Poppins', sans-serif; /* Use Poppins for bold impact */
+            font-weight: 800; /* Extra bold */
+            padding: 0.5rem 1rem; /* Reduced padding */
+            border-radius: 0.5rem; /* Soften corners */
+            background: linear-gradient(45deg, rgba(var(--color-prussian-blue), 0.2), rgba(var(--color-blue-green), 0.2)); /* Subtle background gradient */
+            backdrop-filter: blur(5px); /* Add a subtle blur effect */
+            -webkit-backdrop-filter: blur(5px); /* For Safari */
+            box-shadow: 0 0 10px rgba(0,0,0,0.4); /* Outer box shadow */
+            font-size: 0.9rem; /* Significantly reduced font size */
+            display: inline-block; /* Essential for text-shadow and transform */
+            
+            /* Apply animation directly here for concurrent effect */
+            animation: signature-breathing-glow 3s infinite alternate ease-in-out;
+            
+            /* Initial text shadow for typing effect (subtle) */
+            text-shadow: 
+                0 0 5px rgba(255, 183, 3, 0.6), /* Selective Yellow base glow */
+                0 0 10px rgba(251, 133, 0, 0.4); /* UT Orange secondary glow */
+        }
+
+        /* No separate active-animation class needed if animation is always on */
+        /* .ijoba-signature-glow.active-animation {
+            animation: signature-breathing-glow 3s infinite alternate ease-in-out;
+        } */
+
+        /* Cursor for the mobile signature typing effect */
+        .mobile-signature-cursor {
+            border-right: 3px solid transparent; /* Cursor effect, initially transparent */
+        }
+
+        .mobile-signature-cursor.typing-active {
+            border-right: 3px solid rgb(var(--color-selective-yellow)); /* Visible cursor */
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes signature-breathing-glow {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 
+                    0 0 10px rgba(255, 183, 3, 0.8), 
+                    0 0 20px rgba(251, 133, 0, 0.6),
+                    0 0 30px rgba(255, 183, 3, 0.4);
+                box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            }
+            50% {
+                transform: scale(1.03); /* Subtle breathing effect */
+                text-shadow: 
+                    0 0 15px rgba(255, 183, 3, 1), /* More intense selective yellow */
+                    0 0 30px rgba(251, 133, 0, 0.9), 
+                    0 0 45px rgba(255, 183, 3, 0.7), 
+                    0 0 60px rgba(251, 133, 0, 0.5); 
+                box-shadow: 0 0 25px rgba(0,0,0,0.8); /* More pronounced box shadow */
+            }
+        }
+    </style>
+
+    <script>
+        // Tailwind CSS configuration with custom colors and fonts
+        // This is necessary for Tailwind to recognize your custom colors and animations
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sky-blue': 'rgb(var(--color-sky-blue))',
+                        'blue-green': 'rgb(var(--color-blue-green))',
+                        'prussian-blue': 'rgb(var(--color-prussian-blue))',
+                        'selective-yellow': 'rgb(var(--color-selective-yellow))',
+                        'ut-orange': 'rgb(var(--color-ut-orange))',
+                        'white-custom': 'rgb(var(--color-white))',
+                        'gray-light': 'rgb(var(--color-gray-light))',
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        roll: 'roll 2s linear infinite',
+                        glow: 'glow 1.5s infinite alternate',
+                        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
+                        'scale-in': 'scale-in 0.8s ease-out forwards',
+                        'bounce-button': 'bounce-button 2s infinite ease-in-out', /* Added for button bounce */
+                        'breathe-glow-chase': 'breathe-glow-chase 2s infinite alternate ease-in-out', /* Added for Chase breathing glow */
+                        'ijoba-pulse-scale': 'ijoba-pulse-scale 2.5s infinite alternate ease-in-out', /* Added for Ijoba pulse-scale */
+                        'signature-breathing-glow': 'signature-breathing-glow 3s infinite alternate ease-in-out', /* Added for new signature glow */
+                    },
+                    keyframes: {
+                        roll: {
+                            'from': { transform: 'rotate(0deg)' },
+                            'to': { transform: '360deg)' },
+                        },
+                        glow: {
+                            'from': { filter: 'drop-shadow(0 0 8px rgba(255, 183, 3, 0.8)) drop-shadow(0 0 15px rgba(255, 183, 3, 0.6))' },
+                            'to': { filter: 'drop-shadow(0 0 15px rgba(255, 183, 3, 1)) drop-shadow(0 0 30px rgba(255, 183, 3, 0.9)' },
+                        },
+                        'fade-in-up': {
+                            '0%': { opacity: '0', transform: 'translateY(50px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        'scale-in': {
+                            '0%': { opacity: '0', transform: 'scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        'bounce-button': { /* Keyframes for button bounce */
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '25%': { transform: 'translateY(-5px)' },
+                            '50%': { transform: 'translateY(0)' },
+                            '75%': { transform: 'translateY(-2px)' },
+                        },
+                        'breathe-glow-chase': { /* Keyframes for breathe-glow-chase */
+                            '0%, 100%': {
+                                textShadow: '0 0 3px rgba(255, 183, 3, 0.7), 0 0 8px rgba(255, 183, 3, 0.4)',
+                            },
+                            '50%': {
+                                textShadow: '0 0 10px rgba(255, 183, 3, 1), 0 0 25px rgba(255, 183, 3, 0.8), 0 0 40px rgba(255, 183, 3, 0.6)',
+                            },
+                        },
+                        'ijoba-pulse-scale': { /* Keyframes for ijoba-pulse-scale */
+                            '0%, 100%': {
+                                transform: 'scale(1)',
+                                textShadow: '0 0 3px rgba(251, 133, 0, 0.7), 0 0 8px rgba(251, 133, 0, 0.4)',
+                            },
+                            '50%': {
+                                transform: 'scale(1.02)',
+                                textShadow: '0 0 8px rgba(251, 133, 0, 0.9), 0 0 20px rgba(251, 133, 0, 0.7), 0 0 30px rgba(251, 133, 0, 0.5)',
+                            },
+                        },
+                        'signature-breathing-glow': { /* Keyframes for new signature glow */
+                            '0%, 100%': {
+                                transform: 'scale(1)',
+                                textShadow: '0 0 10px rgba(255, 183, 3, 0.8), 0 0 20px rgba(251, 133, 0, 0.6), 0 0 30px rgba(255, 183, 3, 0.4)',
+                                boxShadow: '0 0 15px rgba(0,0,0,0.5)',
+                            },
+                            '50%': {
+                                transform: 'scale(1.03)',
+                                textShadow: '0 0 15px rgba(255, 183, 3, 1), 0 0 30px rgba(251, 133, 0, 0.9), 0 0 45px rgba(255, 183, 3, 0.7), 0 0 60px rgba(251, 133, 0, 0.5)',
+                                boxShadow: '0 0 25px rgba(0,0,0,0.8)',
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white-custom text-gray-800">
+
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <!-- Replace this SVG with your actual logo SVG. Selective Yellow for fill, UT Orange for stroke -->
+        <svg class="preloader-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="40" fill="rgb(var(--color-selective-yellow), 0.8)" stroke="rgb(var(--color-ut-orange))" stroke-width="5"/>
+            <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="24" font-weight="bold" font-family="Poppins, sans-serif">LOGO</text>
+        </svg>
+    </div>
+
+    <!-- Header Section -->
+    <header class="bg-prussian-blue text-white shadow-md sticky top-0 z-50">
+        <!-- Premium Advert Banner (Post-Login - Hidden by default, shown with JS after login) -->
+        <div id="premiumAdBanner" class="bg-ut-orange text-white text-center py-2 px-4 hidden">
+            <div class="container mx-auto flex justify-between items-center">
+                <p class="flex-grow text-lg">
+                    <span class="font-bold">Premium Ad:</span> Discover amazing deals from our partners!
+                    <a href="#" class="underline ml-2 hover:text-prussian-blue transition duration-300">Learn More</a>
+                </p>
+                <button class="text-white hover:text-prussian-blue text-2xl transition duration-300" onclick="document.getElementById('premiumAdBanner').style.display='none';">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <img src="https://placehold.co/40x40/FFFFFF/023047?text=LOGO" alt="Your Logo" class="h-10 w-10 rounded-full shadow-md">
+                <span class="text-2xl font-poppins font-bold text-white tracking-wide">OlaHub</span>
+            </a>
+
+            <!-- Navigation (Desktop) -->
+            <nav class="hidden md:flex space-x-8 text-lg font-inter">
+                <a href="#home" class="hover:text-selective-yellow transition duration-300 ease-in-out">Home</a>
+                <a href="#about" class="hover:text-selective-yellow transition duration-300 ease-in-out">About</a>
+                <a href="#services" class="hover:text-selective-yellow transition duration-300 ease-in-out">Services</a>
+                <a href="#how-it-works" class="hover:text-selective-yellow transition duration-300 ease-in-out">How It Works</a>
+                <a href="#testimonials" class="hover:text-selective-yellow transition duration-300 ease-in-out">Testimonials</a>
+                <a href="#faq" class="hover:text-selective-yellow transition duration-300 ease-in-out">FAQ</a>
+                <a href="#blog" class="hover:text-selective-yellow transition duration-300 ease-in-out">Blog</a>
+                <a href="#contact-us" class="hover:text-selective-yellow transition duration-300 ease-in-out">Contact</a>
+            </nav>
+
+            <!-- Auth Buttons & Search (Desktop) -->
+            <div class="hidden md:flex items-center space-x-4">
+                <button id="searchButton" class="text-white hover:text-selective-yellow transition duration-300 text-xl">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="#" class="btn-outline-white">Login</a>
+                <a href="#" class="btn-primary bg-selective-yellow text-prussian-blue hover:bg-ut-orange">Register</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton" class="md:hidden text-white text-3xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Overlay -->
+        <div id="mobileMenu" class="fixed inset-0 bg-prussian-blue bg-opacity-95 z-50 hidden flex-col items-center justify-around space-y-2 md:hidden mobile-menu-overlay hidden-state">
+            <button id="closeMobileMenuButton" class="absolute top-6 right-6 text-white text-4xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <a href="#home" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">Home</a>
+            <a href="#about" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">About</a>
+            <a href="#services" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">Services</a>
+            <a href="#how-it-works" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">How It Works</a>
+            <a href="#testimonials" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">Testimonials</a>
+            <a href="#faq" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">FAQ</a>
+            <a href="#blog" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">Blog</a>
+            <a href="#contact-us" class="text-sm text-white font-poppins hover:text-selective-yellow transition duration-300" onclick="hideMobileMenu(); showPreloader();">Contact</a>
+            <a href="#" class="btn-outline-white text-lg px-8 py-3">Login</a>
+            <a href="#" class="btn-primary bg-selective-yellow text-prussian-blue hover:bg-ut-orange text-lg px-8 py-3">Register</a>
+
+            <!-- New special footer element - now with ID and no initial text/animation classes -->
+            <div id="mobileSignature" class="mt-8 text-center">
+                <!-- Text will be typed here by JS -->
+                <span id="mobileSignatureText" class="ijoba-signature-glow"></span>
+                <span id="mobileSignatureCursor" class="mobile-signature-cursor"></span>
+            </div>
+        </div>
+
+        <!-- Search Modal (Hidden by default) -->
+        <div id="searchModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center transition-opacity duration-300 opacity-0 invisible pointer-events-none">
+            <div class="bg-white-custom p-8 rounded-xl shadow-2xl w-11/12 md:w-1/2 lg:w-1/3 relative transform scale-95 animate-scale-in">
+                <button id="closeSearchModalButton" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-3xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 class="text-3xl font-poppins font-bold text-prussian-blue mb-6">Search Our Products</h3>
+                <input type="text" placeholder="Search for products..." class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-green text-lg">
+                <button class="btn-primary w-full mt-6 text-lg">Search</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero/Banner Section -->
+    <section id="home" class="relative bg-gradient-to-br from-blue-green to-prussian-blue text-white py-20 md:py-28 overflow-hidden scroll-animate">
+        <div class="absolute inset-0">
+            <img src="https://placehold.co/1920x1080/023047/219ebc?text=Background+Image" alt="Banner Background" class="w-full h-full object-cover opacity-30">
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h1 class="text-3xl md:text-4xl font-poppins font-bold leading-tight mb-4">
+                Your Gateway to <span id="dynamic-hero-text" class="typewriter-text hero-title-glow-text"></span>
+            </h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-8 animate-fade-in-up delay-100">
+                Unlock a world of virtual numbers, ready-to-use social media accounts, powerful boosting services, and premium digital logins.
+            </p>
+            <div class="flex justify-center space-x-4 animate-fade-in-up delay-200">
+                <!-- Buttons now have bounce-button animation -->
+                <a href="#" class="btn-primary bg-selective-yellow text-prussian-blue hover:bg-ut-orange btn-hero-animated">Explore Services</a>
+                <a href="#" class="btn-outline border-prussian-blue text-prussian-blue bg-white hover:bg-prussian-blue hover:text-white btn-hero-animated">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section (Reverted to original clean design with checks) -->
+    <section id="about" class="py-16 md:py-24 bg-white-custom scroll-animate">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase mb-4 tracking-wider">About Us</h2>
+                    <h3 class="text-4xl md:text-5xl font-poppins font-bold text-prussian-blue leading-tight mb-8">
+                        Your Trusted Partner in the Digital Sphere
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                        We provide a seamless and secure platform for all your digital needs. From instant social media credibility to enhanced online privacy, we empower you to navigate the digital world with confidence and ease.
+                    </p>
+                    <ul class="space-y-4 text-gray-700 text-base mb-8"> <!-- Text size for list items remains text-base -->
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span>Instant Credibility for your online presence.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span>Save Time and Effort in building your digital assets.</span>
+                        </li>
+                        <!-- New: Chase Taglines integrated into the list -->
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span><span class="text-chase-highlight">Chase</span> your Digital Wealth.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span>Reach a Targeted Audience with pre-established accounts.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span><span class="text-chase-highlight">Chase</span> your Digital Edge.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span>Strategic Expansion into new digital markets.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-blue-green text-xl mt-1 mr-3"></i>
+                            <span>All services are powered by <span class="text-chase-highlight">Chase</span>.</span>
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-primary bg-blue-green text-white hover:bg-prussian-blue">Learn More</a>
+                </div>
+                <div class="lg:w-1/2">
+                    <img src="https://placehold.co/600x400/8ecae2/023047?text=About+Image" alt="About Us" class="rounded-lg shadow-xl w-full h-auto object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Counters Section (Reverted to original background and item styling) -->
+    <section class="py-16 md:py-24 text-white counters-section scroll-animate" style="background-image: url('https://placehold.co/1920x600/023047/219ebc?text=Counters+Background');">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                <div class="counter-item p-6">
+                    <h4 class="text-5xl font-poppins font-bold text-selective-yellow mb-2">
+                        <span class="odometer" data-count="45">0</span>+
+                    </h4>
+                    <p class="text-xl">Digital Products</p>
+                </div>
+                <div class="counter-item p-6">
+                    <h4 class="text-5xl font-poppins font-bold text-selective-yellow mb-2">
+                        <span class="odometer" data-count="60">0</span>K+
+                    </h4>
+                    <p class="text-xl">Happy Customers</p>
+                </div>
+                <div class="counter-item p-6">
+                    <h4 class="text-5xl font-poppins font-bold text-selective-yellow mb-2">
+                        <span class="odometer" data-count="25">0</span>+
+                    </h4>
+                    <p class="text-xl">Years Experience</p>
+                </div>
+                <div class="counter-item p-6">
+                    <h4 class="text-5xl font-poppins font-bold text-selective-yellow mb-2">
+                        <span class="odometer" data-count="359">0</span>
+                    </h4>
+                    <p class="text-xl">Global Partners</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 md:py-24 bg-gray-light scroll-animate">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+                <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase px-4 tracking-wider">Our Process</h2>
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-poppins font-bold text-prussian-blue leading-tight mb-12">
+                Simple Steps to Get Started
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="p-6 bg-white-custom rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-5xl text-ut-orange mb-4">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4 class="text-2xl font-poppins font-semibold text-prussian-blue mb-2">1. Explore & Select</h4>
+                    <p class="text-gray-700">Browse our wide range of virtual numbers, social accounts, boosting services, and premium logins. Find exactly what you need.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="p-6 bg-white-custom rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-5xl text-ut-orange mb-4">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4 class="text-2xl font-poppins font-semibold text-prussian-blue mb-2">2. Secure Purchase</h4>
+                    <p class="text-gray-700">Add your desired items to cart and complete your purchase through our secure and encrypted payment gateway. Fast and reliable.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="p-6 bg-white-custom rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <div class="text-5xl text-ut-orange mb-4">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4 class="text-2xl font-poppins font-semibold text-prussian-blue mb-2">3. Instant Access</h4>
+                    <p class="text-gray-700">Receive instant access to your purchased digital products. Start using them immediately to <span class="text-chase-highlight">Chase</span> your digital goals!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section (NOW WITH ORANGE ICONS DIRECTLY APPLIED) -->
+    <section id="services" class="py-16 md:py-24 bg-white-custom scroll-animate">
+        <div class="container mx-auto px-4 text-center">
+            <!-- Corrected heading structure for "--- OUR OFFERINGS ---" -->
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+                <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase px-4 tracking-wider">Our Offerings</h2>
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-poppins font-bold text-prussian-blue leading-tight mb-12">
+                Seamless Solutions for Your Digital Needs
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature Item 1: Virtual Numbers -->
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="fas fa-mobile-alt text-5xl text-ut-orange"></i>
+                    </div>
+                    <h4>Virtual Numbers & OTP</h4>
+                    <p>Enhance your privacy and bypass geographical restrictions with OlaHub's virtual numbers. Perfect for OTP verification, app registrations, or maintaining anonymity, our numbers offer instant activation and reliable service from various countries. <span class="text-chase-highlight">Chase</span> seamless digital communication without compromising your security.</p>
+                </div>
+                <!-- Feature Item 2: Social Media Accounts -->
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="fas fa-users text-5xl text-ut-orange"></i>
+                    </div>
+                    <h4>Ready-to-Use Social Accounts</h4>
+                    <p>At OlaHub, we make acquiring social media accounts seamless and secure. Our platform offers a wide selection of verified and authentic accounts across leading platforms including Instagram, Facebook, Twitter (X), and YouTube. Whether you're looking for personal, aged, or niche accounts, we ensure quality and reliability in every purchase, helping you <span class="text-chase-highlight">Chase</span> your digital reach.</p>
+                </div>
+                <!-- Feature Item 3: Social Media Boosting -->
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="fas fa-rocket text-5xl text-ut-orange"></i>
+                    </div>
+                    <h4>Social Media Boosting</h4>
+                    <p>Amplify your online influence with OlaHub's social media boosting services. We provide genuine followers, likes, comments, and views from real users, helping you achieve organic growth and increased visibility across platforms like Instagram, Facebook, and YouTube. <span class="text-chase-highlight">Chase</span> authentic engagement and accelerate your digital presence.</p>
+                </div>
+                <!-- Feature Item 4: Digital Logins (VPN, Netflix) -->
+                <div class="feature-card">
+                    <div class="icon">
+                        <i class="fas fa-key text-5xl text-ut-orange"></i>
+                    </div>
+                    <h4>Premium Digital Logins</h4>
+                    <p>Unlock a world of exclusive content and services with OlaHub's premium digital logins. Gain instant, secure access to popular platforms like VPNs, streaming services, and more, without the hassle of subscriptions. <span class="text-chase-highlight">Chase</span> unlimited entertainment and secure browsing with our verified accounts.</p>
+                </div>
+                <!-- Add more feature items as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 md:py-24 bg-prussian-blue text-white scroll-animate">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+                <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase px-4 tracking-wider">What Our Clients Say</h2>
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-poppins font-bold leading-tight mb-12">
+                Trusted by Thousands Worldwide
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 (Original - with emoji) -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"OlaHub has transformed my online presence! The social media accounts are top-notch and delivered instantly. Truly a game-changer! 🚀"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=User1" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Jane Doe</p>
+                            <p class="text-sm text-gray-600">Digital Marketer</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 2 (Original - with emoji) -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"The virtual numbers are a lifesaver for privacy. I can now manage multiple online registrations without exposing my personal number. Highly recommended! ✅"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=User2" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">John Smith</p>
+                            <p class="text-sm text-gray-600">Online Entrepreneur</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial 3 (Original - with emoji) -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"Amazing boosting services! My social media engagement has skyrocketed, and I'm reaching a much wider audience. Thanks, OlaHub! 🔥"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=User3" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Emily White</p>
+                            <p class="text-sm text-gray-600">Content Creator</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW TESTIMONIAL 1 (Pidgin - Abdul Gafar "A-Wire") -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"Omo, ever since I don know this site nah ein I don rest of getting scammed, Ajeh seh 😹. Nah God go bless <span class="text-ijoba-highlight">Ijoba</span> for me, you no go fall 🤲, Allahkua 💯✅"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=A-Wire" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Abdul Gafar</p>
+                            <p class="text-sm text-gray-600">A-Wire</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW TESTIMONIAL 2 (Pidgin - Don Richie "The Connect") -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"<span class="text-ijoba-highlight">Ijoba</span> 🙌, Ba’ami, you no dey ever disappoint ever since I don know you, walahi. Though I fit never meet you one-on-one, but omo you be my mentor oo, Ajeh 💯✅. I dey loyal to your Government ba’ami 🙇‍♂️🙌"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=DonR" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Don Richie</p>
+                            <p class="text-sm text-gray-600">The Connect</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW TESTIMONIAL 3 (Pidgin - Dobby Xchange) -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"I don talk this thing for person before say, no matter how dem try ehn, make dem go bring their boss come, dem still no fit reach you OlaHub, your services just dey wan kind to me, e dey always sweet me for body normally, but make we still kon put that one aside, coming here alone dey always give joy 😊"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=Dobby" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Dobby Xchange</p>
+                            <p class="text-sm text-gray-600">Digital Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW TESTIMONIAL 4 (Pidgin - Skyler Ray) -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"I just too love your services, no be lie, Ajeh seh! 🥰😍"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=Skyler" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Skyler Ray</p>
+                            <p class="text-sm text-gray-600">Happy Customer</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW TESTIMONIAL 5 (Pidgin - Pablo "The Plug") -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"C’mon, forget it! I've been seeing and knowing sites, but I’ve not come across any like this, damn! Keep it up OlaHub, I’ll personally refer you to friends and family, keep the good work 🫡✊🫶🫂"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=Pablo" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Pablo</p>
+                            <p class="text-sm text-gray-600">The Plug</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- NEW TESTIMONIAL 6 (Pidgin - Waheed Jamil) -->
+                <div class="bg-white-custom text-gray-800 p-8 rounded-lg shadow-lg">
+                    <p class="text-lg italic mb-4">"Indeed, you are the <span class="text-ijoba-highlight">Ijoba</span> of digital solutions, no be lie, ahswear 💯✅"</p>
+                    <div class="flex items-center justify-center">
+                        <img src="https://placehold.co/60x60/8ecae2/023047?text=Waheed" alt="Client Avatar" class="w-16 h-16 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-prussian-blue">Waheed Jamil</p>
+                            <p class="text-sm text-gray-600">Satisfied User</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 md:py-24 bg-gray-light scroll-animate">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+                <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase px-4 tracking-wider">Got Questions?</h2>
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-poppins font-bold text-prussian-blue leading-tight mb-12">
+                Frequently Asked Questions
+            </h3>
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item mb-4">
+                    <div class="faq-question">
+                        <h4 class="text-lg font-poppins font-semibold text-prussian-blue">How do I purchase products on OlaHub?</h4>
+                        <i class="fas fa-chevron-down text-blue-green arrow-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply browse our categories, select the digital product you need, add it to your cart, and proceed to our secure checkout. Once payment is confirmed, you'll receive instant access.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="faq-item mb-4">
+                    <div class="faq-question">
+                        <h4 class="text-lg font-poppins font-semibold text-prussian-blue">Are the social media accounts verified?</h4>
+                        <i class="fas fa-chevron-down text-blue-green arrow-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all social media accounts offered on OlaHub are verified and authentic, ensuring reliability and quality for your needs. We prioritize genuine accounts to help you <span class="text-chase-highlight">Chase</span> your digital growth.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="faq-item mb-4">
+                    <div class="faq-question">
+                        <h4 class="text-lg font-poppins font-semibold text-prussian-blue">What payment methods do you accept?</h4>
+                        <i class="fas fa-chevron-down text-blue-green arrow-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept a variety of secure payment methods, including major credit cards and popular digital payment platforms, to ensure a smooth transaction process.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 4 -->
+                <div class="faq-item mb-4">
+                    <div class="faq-question">
+                        <h4 class="text-lg font-poppins font-semibold text-prussian-blue">Is my personal information secure?</h4>
+                        <i class="fas fa-chevron-down text-blue-green arrow-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely. At OlaHub, we prioritize your privacy and security. All your personal information and transactions are encrypted and protected with the highest industry standards. We help you <span class="text-chase-highlight">Chase</span> privacy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section for External Ad Integration (Placeholder) -->
+    <section class="py-16 md:py-24 bg-sky-blue text-white text-center relative overflow-hidden scroll-animate">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://placehold.co/1920x400/8ecae2/023047?text=Ad+Background+Pattern" alt="Pattern" class="w-full h-full object-cover"/>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h2 class="text-4xl md:text-5xl font-poppins font-bold mb-8 animate-fade-in-up">
+                Discover More: Engaging Video Ads
+            </h2>
+            <p class="text-xl max-w-3xl mx-auto mb-12 animate-fade-in-up delay-100">
+                Watch quick, captivating advertisements from our partners and explore new opportunities.
+            </p>
+            <div class="w-full max-w-2xl mx-auto bg-prussian-blue rounded-2xl shadow-2xl overflow-hidden aspect-video flex items-center justify-center text-2xl text-white transform hover:scale-105 transition duration-300 animate-scale-in delay-200">
+                <!-- This is where the video ads would be dynamically loaded -->
+                <p>Video Ad Placeholder (5-10 seconds)</p>
+            </div>
+            <p class="mt-6 text-base opacity-90">Ads powered by our monetization partners, including AdSense.</p>
+        </div>
+    </section>
+
+    <!-- Blog/News Section (Placeholder) -->
+    <section id="blog" class="py-16 md:py-24 bg-white-custom scroll-animate">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+                <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase px-4 tracking-wider">Latest Insights</h2>
+                <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px]"></div>
+            </div>
+            <h3 class="text-4xl md:text-5xl font-poppins font-bold text-prussian-blue leading-tight mb-12">
+                Our Blog & News
+            </h3>
+            <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
+                Stay updated with the latest trends in digital products, online privacy, and social media strategies.
+                Full blog section coming soon!
+            </p>
+            <a href="#" class="btn-primary bg-blue-green text-white hover:bg-prussian-blue">Read Our Articles</a>
+        </div>
+    </section>
+
+    <!-- Contact Us Section (Dedicated) -->
+    <section id="contact-us" class="py-16 md:py-24 bg-gray-light scroll-animate">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <div class="flex items-center justify-center lg:justify-start mb-4">
+                        <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px] lg:max-w-[50px]"></div>
+                        <h2 class="text-lg font-poppins font-semibold text-blue-green uppercase px-4 tracking-wider">Get In Touch</h2>
+                        <div class="flex-grow h-px bg-blue-green max-w-[50px] md:max-w-[100px] lg:max-w-[100px]"></div>
+                    </div>
+                    <h3 class="text-4xl md:text-5xl font-poppins font-bold text-prussian-blue leading-tight mb-8">
+                        Have Questions? We're Here to Help!
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                        Whether you have inquiries about our services, need support, or just want to say hello, our team is ready to assist you. Reach out to us anytime!
+                    </p>
+                    <div class="space-y-4 text-gray-700 text-lg">
+                        <p class="flex items-center justify-center lg:justify-start"><i class="fas fa-envelope text-blue-green mr-3"></i> info@yourmarketplace.com</p>
+                        <p class="flex items-center justify-center lg:justify-start"><i class="fas fa-phone-alt text-blue-green mr-3"></i> +234 800 123 4567</p>
+                        <p class="flex items-center justify-center lg:justify-start"><i class="fas fa-map-marker-alt text-blue-green mr-3"></i> 123 Digital Street, Lagos, Nigeria</p>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 w-full">
+                    <form class="bg-white-custom p-8 rounded-lg shadow-xl">
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-green" placeholder="John Doe">
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Your Email</label>
+                            <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-green" placeholder="john.doe@example.com">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 text-sm font-bold mb-2">Your Message</label>
+                            <textarea id="message" name="message" rows="5" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-green" placeholder="How can we help you?"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary bg-blue-green text-white w-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section (Reverted to original design) -->
+    <footer id="contact" class="bg-prussian-blue text-white py-16 md:py-20">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12">
+            <!-- Company Info -->
+            <div class="md:col-span-1">
+                <a href="#" class="flex items-center space-x-2 mb-4">
+                    <img src="https://placehold.co/40x40/FFFFFF/023047?text=LOGO" alt="Your Logo" class="h-10 w-10 rounded-full">
+                    <span class="text-2xl font-poppins font-bold text-white tracking-wide">OlaHub</span>
+                </a>
+                <p class="text-gray-300 text-sm mb-4">Your ultimate destination for virtual numbers, social media accounts, boosting services, and premium digital logins. At OlaHub, we empower your digital journey. We are <span class="text-ijoba-highlight">Ijoba</span> of digital solutions!</p>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/" target="_blank" class="text-white hover:text-selective-yellow text-xl transition-colors duration-300"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.twitter.com/" target="_blank" class="text-white hover:text-selective-yellow text-xl transition-colors duration-300"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/" target="_blank" class="text-white hover:text-selective-yellow text-xl transition-colors duration-300"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank" class="text-white hover:text-selective-yellow text-xl transition-colors duration-300"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div>
+                <h4 class="text-xl font-poppins font-bold mb-4 text-selective-yellow">Quick Links</h4>
+                <ul class="space-y-2 text-gray-300">
+                    <li><a href="#home" class="hover:text-white transition-colors duration-300">Home</a></li>
+                    <li><a href="#about" class="hover:text-white transition-colors duration-300">About Us</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors duration-300">Services</a></li>
+                    <li><a href="#how-it-works" class="hover:text-white transition-colors duration-300">How It Works</a></li>
+                    <li><a href="#testimonials" class="hover:text-white transition-colors duration-300">Testimonials</a></li>
+                    <li><a href="#faq" class="hover:text-white transition-colors duration-300">FAQ</a></li>
+                    <li><a href="#blog" class="hover:text-white transition-colors duration-300">Blog</a></li>
+                    <li><a href="#contact-us" class="hover:text-white transition-colors duration-300">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div>
+                <h4 class="text-xl font-poppins font-bold mb-4 text-selective-yellow">Contact Info</h4>
+                <ul class="space-y-2 text-gray-300">
+                    <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Digital Street, Lagos, Nigeria</li>
+                    <li><i class="fas fa-phone mr-2"></i> +234 800 123 4567</li>
+                    <li><i class="fas fa-envelope mr-2"></i> info@yourmarketplace.com</li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div>
+                <h4 class="text-xl font-poppins font-bold mb-4 text-selective-yellow">Newsletter</h4>
+                <p class="text-gray-300 text-sm mb-4">Stay updated with our latest offers and news!</p>
+                <form class="flex">
+                    <input type="email" placeholder="Your email" class="p-2 rounded-l-md flex-grow focus:outline-none text-gray-800">
+                    <button type="submit" class="bg-selective-yellow text-prussian-blue p-2 rounded-r-md hover:bg-ut-orange transition-colors duration-300"><i class="fas fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="text-center text-gray-400 text-sm mt-12 pt-8 border-t border-gray-700">
+            &copy; <span id="currentYear"></span> OlaHub: Powered by <span class="text-chase-highlight">Chase</span>.<br> All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Odometer JS for counter animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/odometer.js/0.4.7/odometer.min.js"></script>
+    <script>
+        // Get current year for footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // --- Preloader Logic ---
+        const preloader = document.getElementById('preloader');
+
+        // Function to show preloader
+        function showPreloader() {
+            if (preloader) {
+                preloader.classList.remove('hidden', 'opacity-0', 'invisible');
+                preloader.classList.add('opacity-100', 'visible');
+            }
+        }
+
+        // Function to hide preloader
+        function hidePreloader() {
+            if (preloader) {
+                preloader.classList.add('opacity-0', 'invisible');
+                // Use a timeout to ensure transition completes before setting 'hidden'
+                setTimeout(() => preloader.classList.add('hidden'), 500); 
+            }
+        }
+
+        // Hide preloader once the entire page has loaded
+        window.addEventListener('load', () => {
+            hidePreloader();
+            // Initialize odometer after page load
+            initOdometer();
+        });
+
+        // Intercept all link clicks to show preloader for navigation/processing
+        document.querySelectorAll('a[href^="#"], a[href^="/"]').forEach(link => {
+            link.addEventListener('click', function(event) {
+                // Check if the link points to a different section on the same page or external
+                if (this.hostname === window.location.hostname && this.hash) {
+                    // For hash links, allow default scroll behavior, but show preloader briefly
+                    showPreloader();
+                    setTimeout(hidePreloader, 800); // Hide after a short delay
+                } else if (this.hostname === window.location.hostname || this.href.startsWith('/')) {
+                    // For internal navigation (non-hash), show preloader
+                    showPreloader();
+                }
+                // For external links, do nothing (browser handles navigation)
+            });
+        });
+
+        // Example: Show preloader on form submission
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function() {
+                showPreloader();
+                // In a real app, hidePreloader would be called after the server response.
+            });
+        });
+
+        // --- Mobile Signature Typewriter and Animation ---
+        const mobileSignatureTextElement = document.getElementById('mobileSignatureText');
+        const mobileSignatureCursorElement = document.getElementById('mobileSignatureCursor');
+        const fullSignatureText = "|👤| © 𝗜𝗷❂𝗯𝗮 ☯︎𝗹𝗮 𝗖𝗵𝗮𝘀𝗲 𝗪𝗲𝗮𝗹𝘁𝗵™";
+        let signatureCharIndex = 0;
+        let signatureTypingTimeout;
+
+        function typeMobileSignature() {
+            if (signatureCharIndex < fullSignatureText.length) {
+                mobileSignatureTextElement.textContent += fullSignatureText.charAt(signatureCharIndex);
+                mobileSignatureCursorElement.classList.add('typing-active'); // Keep cursor active during typing
+                signatureCharIndex++;
+                signatureTypingTimeout = setTimeout(typeMobileSignature, 20); // Faster typing speed
+            } else {
+                // Typing finished, keep cursor blinking
+                mobileSignatureCursorElement.classList.add('typing-active'); 
+            }
+        }
+
+        function resetMobileSignature() {
+            clearTimeout(signatureTypingTimeout); // Stop any ongoing typing
+            mobileSignatureTextElement.textContent = ''; // Clear text
+            signatureCharIndex = 0; // Reset index
+            mobileSignatureCursorElement.classList.remove('typing-active'); // Hide cursor
+        }
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenuButton = document.getElementById('closeMobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden', 'hidden-state'); // Remove display:none first
+            // Force reflow to ensure transition starts from display:flex
+            void mobileMenu.offsetWidth; 
+            mobileMenu.classList.add('flex', 'opacity-100', 'visible');
+            
+            // Start typing the signature when menu opens
+            resetMobileSignature(); // Ensure it's reset each time
+            typeMobileSignature();
+        });
+
+        closeMobileMenuButton.addEventListener('click', () => {
+            hideMobileMenu();
+            resetMobileSignature(); // Reset signature when menu closes
+        });
+
+        // Function to hide mobile menu, called by close button and nav links
+        function hideMobileMenu() {
+            mobileMenu.classList.add('opacity-0', 'invisible');
+            mobileMenu.classList.remove('opacity-100', 'visible');
+            // Add hidden after transition completes
+            mobileMenu.addEventListener('transitionend', function handler() {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.removeEventListener('transitionend', handler);
+            }, { once: true });
+        }
+
+        // Close mobile menu when a link inside it is clicked
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', hideMobileMenu);
+        });
+
+        // --- Search Modal Toggle ---
+        const searchButton = document.getElementById('searchButton');
+        const searchModal = document.getElementById('searchModal');
+        const closeSearchModalButton = document.getElementById('closeSearchModalButton');
+
+        searchButton.addEventListener('click', () => {
+            searchModal.classList.remove('hidden');
+            // Force reflow
+            void searchModal.offsetWidth;
+            searchModal.classList.add('flex', 'opacity-100', 'visible');
+        });
+
+        closeSearchModalButton.addEventListener('click', () => {
+            searchModal.classList.add('opacity-0', 'invisible');
+            searchModal.classList.remove('opacity-100', 'visible');
+            // Add hidden after transition completes
+            searchModal.addEventListener('transitionend', function handler() {
+                searchModal.classList.add('hidden');
+                searchModal.removeEventListener('transitionend', handler);
+            }, { once: true });
+        });
+
+        // --- Scroll Animation Logic (for "magical" scrolling) ---
+        const scrollAnimatedElements = document.querySelectorAll('.scroll-animate');
+        const dynamicHeroText = document.getElementById('dynamic-hero-text'); // Get the dynamic hero text span
+
+        const observerOptions = {
+            root: null, /* viewport */
+            rootMargin: '0px',
+            threshold: 0.1 /* 10% of element visible */
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // For elements that only animate once, unobserve them
+                    observer.unobserve(entry.target); 
+
+                    // Specific trigger for hero title typewriter effect
+                    if (entry.target.id === 'home' && dynamicHeroText && !dynamicHeroText.dataset.typingStarted) {
+                        dynamicHeroText.dataset.typingStarted = 'true'; // Mark as started
+                        typeWriter();
+                    }
+                }
+            });
+        }, observerOptions);
+
+        scrollAnimatedElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // --- Odometer Initialization ---
+        function initOdometer() {
+            const odometerElements = document.querySelectorAll('.odometer');
+            odometerElements.forEach(el => {
+                const targetCount = parseInt(el.dataset.count);
+                // Use IntersectionObserver to start odometer animation when visible
+                const odometerObserver = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            el.textContent = targetCount; // Set the target number to trigger animation
+                            obs.unobserve(entry.target); // Stop observing once animated
+                        }
+                    });
+                }, { threshold: 0.5 }); // Trigger when 50% of the odometer is visible
+                odometerObserver.observe(el);
+            });
+        }
+
+        // --- Typewriter Effect Logic for Hero Title ---
+        const phrases = ["Digital Freedom", "Virtual Numbers", "Social Accounts", "Premium Logins"];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 70; // milliseconds per character (Faster)
+        const deletingSpeed = 35; // Faster
+        const pauseBeforeDelete = 1500; // pause before deleting
+        const pauseBeforeType = 500; // pause before typing next
+
+        function typeWriter() {
+            const currentPhrase = phrases[phraseIndex];
+            // Update text content
+            dynamicHeroText.textContent = currentPhrase.substring(0, charIndex);
+
+            // Manage cursor visibility
+            // We need to ensure the cursor is always part of the dynamic text span
+            // If it's not, we'll append it.
+            let cursorElement = dynamicHeroText.querySelector('.typewriter-text-cursor');
+            if (!cursorElement) {
+                cursorElement = document.createElement('span');
+                cursorElement.classList.add('typewriter-text-cursor');
+                dynamicHeroText.appendChild(cursorElement);
+            }
+            
+            if (isDeleting && charIndex === 0) {
+                cursorElement.classList.remove('typing-active'); // Hide cursor briefly when deleted
+            } else if (!isDeleting && charIndex === currentPhrase.length) {
+                cursorElement.classList.remove('typing-active'); // Hide cursor briefly at end of typing
+            } else {
+                cursorElement.classList.add('typing-active'); // Show cursor while typing/deleting
+            }
+
+
+            let speed = isDeleting ? deletingSpeed : typingSpeed;
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                speed = pauseBeforeDelete;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                speed = pauseBeforeType;
+            }
+
+            if (isDeleting) {
+                charIndex--;
+            } else {
+                charIndex++;
+            }
+
+            setTimeout(typeWriter, speed);
+        }
+
+        // --- Simulate user login for premium ad banner (for demonstration) ---
+        // In a real application, this would be handled by your authentication system
+        function simulateLogin() {
+            const premiumAdBanner = document.getElementById('premiumAdBanner');
+            if (premiumAdBanner) {
+                premiumAdBanner.classList.remove('hidden');
+                premiumAdBanner.classList.add('animate-fade-in-up'); // Add an entrance animation
+            }
+        }
+
+        // Call simulateLogin after a short delay to show the premium ad banner for demo purposes
+        // You would remove this in a real application and trigger it on successful user login
+        setTimeout(simulateLogin, 3000); 
+
+        // --- Back to Top Button Logic ---
+        const backToTopBtn = document.getElementById('backToTopBtn');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { // Show button after scrolling 300px
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll to top
+            });
+        });
+
+        // --- FAQ Accordion Logic ---
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.closest('.faq-item');
+                const answer = faqItem.querySelector('.faq-answer');
+                const arrowIcon = button.querySelector('.arrow-icon');
+
+                // Close all other open FAQs
+                document.querySelectorAll('.faq-question.active').forEach(openButton => {
+                    if (openButton !== button) {
+                        openButton.classList.remove('active');
+                        openButton.closest('.faq-item').querySelector('.faq-answer').style.display = 'none';
+                        openButton.querySelector('.arrow-icon').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle the clicked FAQ
+                button.classList.toggle('active');
+                if (button.classList.contains('active')) {
+                    answer.style.display = 'block';
+                    arrowIcon.style.transform = 'rotate(180deg)';
+                } else {
+                    answer.style.display = 'none';
+                    arrowIcon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
