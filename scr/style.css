@@ -9,4 +9,21 @@
 .btn-outline {
   @apply border-2 border-prussian-blue text-prussian-blue bg-white py-3 px-8 rounded-lg hover:bg-prussian-blue hover:text-white transition duration-300 ease-in-out transform hover:scale-105;
 }
-/* ... and so on, copy from previous message ... */
+.faq-question {
+  @apply flex justify-between items-center py-4 px-6 bg-white-custom rounded-lg shadow-md mb-4 transition-all duration-300 cursor-pointer;
+}
+.faq-question:hover {
+  @apply bg-gray-100 shadow-lg;
+}
+.faq-answer {
+  @apply px-6 pb-4 text-gray-700 leading-relaxed hidden;
+}
+.faq-question.active + .faq-answer {
+  display: block;
+}
+#backToTopBtn {
+  @apply fixed bottom-8 right-8 bg-selective-yellow text-prussian-blue p-4 rounded-full shadow-lg text-xl cursor-pointer transition-all duration-300 z-40 hidden;
+}
+#backToTopBtn:hover {
+  @apply bg-ut-orange transform scale-110;
+}
