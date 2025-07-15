@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Components */
+.btn-primary {
+  @apply bg-prussian-blue text-white py-3 px-8 rounded-lg hover:bg-blue-green transition duration-300 ease-in-out transform hover:scale-105;
+}
+.btn-outline {
+  @apply border-2 border-prussian-blue text-prussian-blue bg-white py-3 px-8 rounded-lg hover:bg-prussian-blue hover:text-white transition duration-300 ease-in-out transform hover:scale-105;
+}
+/* ... and so on, copy from previous message ... */
